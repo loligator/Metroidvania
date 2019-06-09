@@ -1,17 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using TMPro;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
     public static GameManager GM;
 
-    private TextMeshProUGUI debugText;
+    private Text debugText;
 
 	// Use this for initialization
 	void Start () {
-        debugText = GameObject.FindGameObjectWithTag("Debug");
+        if (GM == null) {
+            GM = this;
+        } else {
+            GameObject.Destroy(gameObject);
+        }
+
+        debugText = GameObject.FindGameObjectWithTag("Debug").GetComponent<Text>();
 	}
 	
 	// Update is called once per frame
@@ -19,7 +25,11 @@ public class GameManager : MonoBehaviour {
 		
 	}
 
-    static void Debug(string msg) {
-        debugText.text = 
+    public void Debug(string msg) {
+        debugText.text = msg;
+    }
+
+    public void Debug(float msg) {
+        debugText.text = msg.ToString("0.00");
     }
 }
